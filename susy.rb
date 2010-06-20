@@ -1,10 +1,15 @@
+# rake rails:template LOCATION=http://github.com/bazzel/rails-templates/raw/master/susy.rb
 puts
 puts '==  Rails template for setting up compass with susy ================================'
 puts '-- see: http://wiki.github.com/chriseppstein/compass '
 puts '        and http://susy.oddbird.net/ for more'
 puts
 
-# Expects a Gemfile, use http://tomafro.net/2010/02/updated-rails-template-for-bundler for it.
+# Expects a Gemfile, use http://github.com/bazzel/rails-templates/raw/master/bundler.rb template for it.
+if yes?("Set up bundler?")
+  load_template 'http://github.com/bazzel/rails-templates/raw/master/bundler.rb'
+end
+
 append_file 'Gemfile', %{
 
 gem "haml",                ">=3.0.12"
