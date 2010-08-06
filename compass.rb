@@ -15,5 +15,7 @@ gem "haml",                ">=3.0.15"
 gem "compass",             ">=0.10.3"
 }
 
+run "bundle install"
+
 # Use Susy CSS framework
 run "compass init rails --sass-dir=app/stylesheets --css-dir=public/stylesheets/compiled"

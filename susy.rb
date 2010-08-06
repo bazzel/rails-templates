@@ -17,5 +17,7 @@ gem "compass",             ">=0.10.3"
 gem "compass-susy-plugin", ">=0.7.0"
 }
 
+run "bundle install"
+
 # Use Susy CSS framework
 run "compass init rails -r susy -u susy --sass-dir=app/stylesheets --css-dir=public/stylesheets/compiled"
