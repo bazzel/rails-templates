@@ -12,8 +12,8 @@ end
 
 append_file 'Gemfile', %{
 
-gem "haml",                ">=3.0.12"
-gem "compass",             ">=0.10.2"
+gem "haml",                ">=3.0.15"
+gem "compass",             ">=0.10.3"
 gem "compass-susy-plugin", ">=0.7.0"
 }
 
