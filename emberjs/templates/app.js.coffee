@@ -7,8 +7,5 @@
 #= require_tree ./routes
 #= require_self
 
-router = App.router = App.Router.create
-  location: 'hash'
-
 $ ->
-  App.initialize(router)
+  App.initialize()
