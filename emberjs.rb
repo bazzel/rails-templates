@@ -10,7 +10,9 @@ puts
 
 gem 'ember-rails', '~> 0.6.0'
 
-run "bundle install"
+Bundler.with_clean_env do
+  run "bundle install"
+end
 
 # The bootstrap from ember-rails gem does not fit my needs
 # (generated files are .js i.o. .js.coffee, global namespace is not named 'App',
