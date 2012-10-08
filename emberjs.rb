@@ -8,7 +8,7 @@ puts '-- We use ember-rails gem with a little customization for now to suite my 
 puts '-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more'
 puts
 
-gem 'ember-rails', '~> 0.8.0'
+gem 'ember-rails'
 
 Bundler.with_clean_env do
   run "bundle install"
@@ -19,3 +19,6 @@ end
 # used ember files are a bit outdated). Instead we choose a custom installation.
 utils = ::Ember::Utils.new
 utils.setup_ember
+
+generate :controller, "Assets", "index"
+route "root :to => 'assets#index'"
