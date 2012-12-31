@@ -1,7 +1,7 @@
 require File.expand_path('../emberjs/utils', __FILE__)
 
-# rails new APP_PATH --template=http://github.com/bazzel/rails-templates/raw/master/emberjs.rb
-# bundle exec rake rails:template LOCATION=http://github.com/bazzel/rails-templates/raw/master/emberjs.rb
+# rails new APP_PATH --template=https://raw.github.com/bazzel/rails-templates/master/emberjs.rb
+# bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/emberjs.rb
 puts
 puts '==  Rails template for setting up ember.js ================================'
 puts '-- We use ember-rails gem with a little customization for now to suite my personal needs'
