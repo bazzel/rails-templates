@@ -8,7 +8,7 @@ puts '-- We use ember-rails gem with a little customization for now to suite my 
 puts '-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more'
 puts
 
-gem 'ember-rails', '~> 0.6.0'
+gem 'ember-rails', '~> 0.8.0'
 
 Bundler.with_clean_env do
   run "bundle install"
