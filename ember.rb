@@ -1,5 +1,11 @@
 # rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/ember.rb
 # bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember.rb
+#
+# Tested with:
+# Rails 4.0.2
+# Ember 1.4.0-beta.5
+# Ember Data 1.0.0-beta.6
+#
 puts
 puts '==  Rails template for setting up Ember.js ================================'
 puts '-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more'
