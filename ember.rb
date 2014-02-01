@@ -19,11 +19,19 @@ unless Rails.root.join('app/assets/javascripts/application.js.coffee').exist?
 end
 remove_file 'app/assets/javascripts/application.js'
 
-
+# Declare and install gems
+#
 gem 'ember-rails'
 gem 'ember-source'
 
-run 'bundle install'
+inside Rails.root do
+  Bundler.with_clean_env do
+    run 'bundle install'
+  end
+end
+#
+# End Declare and install gems
+
 
 environment 'config.ember.app_name = \'App\''
 environment 'config.ember.variant = :development'
@@ -32,6 +40,7 @@ environment 'config.ember.variant = :production', env: 'production'
 generate 'ember:bootstrap'
 
 # Updating Ember
+#
 CHANNELS = {
   c: 'canary',
   b: 'beta'
@@ -60,6 +69,7 @@ if CHANNELS.keys.include?(channel)
   channel = CHANNELS[channel.to_sym]
   generate "ember:install --channel=#{channel}"
 end
+#
 # End Updating Ember
 
 # Configure the app to serve Ember.js and app assets from an AssetsController
@@ -92,7 +102,3 @@ CODE
 
 run 'rm -rf app/views/layouts'
 route 'root :to => \'assets#index\''
-
-
-# TODO: ember-data
-# TODO:
