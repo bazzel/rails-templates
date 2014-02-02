@@ -21,7 +21,8 @@ remove_file 'app/assets/javascripts/application.js'
 
 # Declare and install gems
 #
-gem 'ember-rails'
+# Current tag (0.14.1) does not use ActiveModelAdapter yet.
+gem 'ember-rails', git: 'https://github.com/emberjs/ember-rails'
 gem 'ember-source'
 
 inside Rails.root do
