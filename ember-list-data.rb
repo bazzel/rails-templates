@@ -67,6 +67,13 @@ App.PostsRoute = Ember.Route.extend
     @store.find 'post'
 CODE
 
+if ask('Do you need an application template? [yN]').downcase == 'y'
+  run 'rm app/assets/javascripts/templates/application.handlebars'
+  file 'app/assets/javascripts/templates/application.handlebars', <<-CODE
+{{outlet}}
+CODE
+end
+
 file 'app/assets/javascripts/templates/posts.handlebars', <<-HTML
 <ul>
   {{#each}}
