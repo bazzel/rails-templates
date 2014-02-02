@@ -6,6 +6,13 @@
 # Ember 1.4.0-beta.5
 # Ember Data 1.0.0-beta.6
 #
+# This templates asks for a model name and creates:
+#  - a Rails model
+#  - a Rails controller with an index action
+#  - some random data
+#  - an Ember route
+#  - an Ember template
+#
 puts
 puts '==  Rails template for setting up Ember.js ================================'
 puts '-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more'
@@ -24,47 +31,76 @@ end
 #
 # End Declare and install gems
 
-generate :resource, 'post', 'title:string body:text published:boolean'
+# Collect model name
+#
+underscored = ask('What\'s the name of model (e.g. `Post` or `post`)?').underscore
+pluralized = underscored.pluralize
+model_name = underscored.camelize
+model_names = model_name.pluralize
 
-run 'rm app/controllers/posts_controller.rb'
-file 'app/controllers/posts_controller.rb', <<-CODE
-class PostsController < ApplicationController
+attributes = ask("Which attributes does '#{model_name}' have (e.g. `title:string body:text published:boolean`)?").downcase
+
+# Generate resource and replace Rails controller
+#
+generate :resource, underscored, attributes
+
+run "rm app/controllers/#{pluralized}_controller.rb"
+file "app/controllers/#{pluralized}_controller.rb", <<-CODE
+class #{model_names}Controller < ApplicationController
   def index
-    render json: Post.all
+    render json: #{model_name}.all
   end
 end
 CODE
 
+# Add some fake data
+#
+# Try to figure out what fake data to use
+parsed_attributes = attributes.split(' ').map do |attr|
+  name, type = attr.split(':')
+
+  value = case type
+  when 'text'
+    'Faker::Lorem.paragraphs.join(\'\\n\')'
+  when 'boolean'
+    '(rand(2) == 1)'
+  else
+    'Faker::Lorem.word'
+  end
+
+  "#{underscored}.#{name} = #{value}"
+end
+
 append_file 'db/seeds.rb', <<-CODE
-Post.destroy_all
+#{model_name}.destroy_all
 
 100.times do
-  Post.new.tap do |post|
-    post.title = Faker::Lorem.word
-    post.body = Faker::Lorem.paragraphs.join('\n')
-    post.published = (rand(2) == 1)
-    post.save
+  #{model_name}.new.tap do |#{underscored}|
+    #{parsed_attributes.join("\n    ")}
+    #{underscored}.save
   end
 end
 CODE
 
 rake 'db:migrate'
 rake 'db:seed'
-
-# Use generator where possible
 #
-# `rails g resource` provides us with a Ember model
+# End Add some fake data
+
+# Ember stuff
+#
+# `rails g resource` already provided us with a Ember model
 #
 # Update the router manually:
 inject_into_file 'app/assets/javascripts/router.js.coffee', after: 'App.Router.map ()->' do
-  "\n  @resource 'posts'"
+  "\n  @resource '#{pluralized}'"
 end
 
 # `rails g ember:resource` is not very useful:
-file 'app/assets/javascripts/routes/posts_route.js.coffee', <<-CODE
-App.PostsRoute = Ember.Route.extend
+file "app/assets/javascripts/routes/#{pluralized}_route.js.coffee", <<-CODE
+App.#{model_names}Route = Ember.Route.extend
   model: ->
-    @store.find 'post'
+    @store.find '#{underscored}'
 CODE
 
 if ask('Do you need an application template? [yN]').downcase == 'y'
@@ -74,12 +110,19 @@ if ask('Do you need an application template? [yN]').downcase == 'y'
 CODE
 end
 
-file 'app/assets/javascripts/templates/posts.handlebars', <<-HTML
+# Generate the template
+#
+file "app/assets/javascripts/templates/#{pluralized}.handlebars", <<-HTML
 <ul>
   {{#each}}
   <li>{{title}}</li>
   {{/each}}
 </ul>
 HTML
+#
+# End Ember stuff
 
-
+puts
+puts 'Start your server and navigate to:'
+puts "http://localhost:3000##{pluralized}"
+puts
