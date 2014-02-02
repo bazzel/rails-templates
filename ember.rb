@@ -99,7 +99,6 @@ file 'app/assets/javascripts/templates/application.handlebars', <<-CODE
   (inside <code>app/assets/javascripts/templates/application.handlebars</code>) with your application's
   HTML.</p>
 </div>
-{{outlet}}
 CODE
 
 run 'rm -rf app/views/layouts'
