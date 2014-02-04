@@ -14,6 +14,7 @@ puts
 unless Rails.root.join('app/assets/javascripts/application.js.coffee').exist?
   file 'app/assets/javascripts/application.js.coffee', <<-CODE.gsub(/^\s*/, '')
     #= require jquery
+    #= require jquery_ujs
     #= require_tree .
   CODE
 end
