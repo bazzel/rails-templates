@@ -150,7 +150,11 @@ inject_into_file application_controller, after: /^\s*private\s*\n/ do
   end
 
   def current_user
-    @current_user ||= User.find(session[:current_user_id]) if session[:current_user_id]
+    @current_user ||= access_token && User.find_by_token(access_token)
+  end
+
+  def access_token
+    @access_token ||= request.authorization && request.authorization.split(' ').last
   end
 CODE
 end
