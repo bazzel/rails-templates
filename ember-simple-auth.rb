@@ -14,14 +14,16 @@
 #  -
 #  -
 #
-puts
-puts '==  Rails template for setting up authentication with Ember.SimpleAuth  ================================'
-puts '-- see: http://emberjs.com and http://ember-simple-auth.simplabs.com for more'
-puts
-puts 'If you haven\'t set up Ember.js in Rails yet, you can do this by running the following template:'
-puts
-puts '  bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember.rb'
-puts
+puts <<-CODE
+
+==  Rails template for setting up authentication with Ember.SimpleAuth  ================================
+-- see: http://emberjs.com and http://ember-simple-auth.simplabs.com for more info
+
+If you haven\'t set up Ember.js in Rails yet, you can do this by running the following template:
+
+  bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember.rb
+
+CODE
 
 # Declare and install gems
 #
@@ -182,7 +184,6 @@ CODE
 rake 'db:migrate'
 rake 'db:seed'
 
-puts
 puts <<-CODE
 
 *********************************************************************
