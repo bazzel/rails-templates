@@ -168,7 +168,6 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       user.token = SecureRandom.hex
       user.save!
-      session[:current_user_id] = user.id
       render json: { access_token: user.token, token_type: 'bearer' }
     else
       head 401
