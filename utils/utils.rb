@@ -1,3 +1,6 @@
+# Adds a gem entry for the supplied gem to the generated application's Gemfile
+# and installs the gems for you.
+#
 # @example
 #  bundle_install do
 #    gem 'ember-rails', git: 'https://github.com/emberjs/ember-rails'
