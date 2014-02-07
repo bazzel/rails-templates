@@ -1,3 +1,5 @@
+Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
+
 # rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/ember.rb
 # bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember.rb
 #
@@ -22,14 +24,9 @@ remove_file 'app/assets/javascripts/application.js'
 
 # Declare and install gems
 #
-# Current tag (0.14.1) does not use ActiveModelAdapter yet.
-gem 'ember-rails', git: 'https://github.com/emberjs/ember-rails'
-gem 'ember-source'
-
-inside Rails.root do
-  Bundler.with_clean_env do
-    run 'bundle install'
-  end
+bundle_install do
+  gem 'ember-rails', git: 'https://github.com/emberjs/ember-rails' # Current tag (0.14.1) does not use ActiveModelAdapter yet.
+  gem 'ember-source'
 end
 #
 # End Declare and install gems

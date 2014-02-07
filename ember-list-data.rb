@@ -1,3 +1,5 @@
+Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
+
 # rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/ember-list-data.rb
 # bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember-list-data.rb
 #
@@ -21,12 +23,8 @@ puts
 
 # Declare and install gems
 #
-gem 'faker'
-
-inside Rails.root do
-  Bundler.with_clean_env do
-    run 'bundle install'
-  end
+bundle_install do
+  gem 'faker'
 end
 #
 # End Declare and install gems

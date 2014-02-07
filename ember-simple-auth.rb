@@ -1,3 +1,5 @@
+Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
+
 # rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/ember-simple-auth.rb
 # bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember-simple-auth.rb
 #
@@ -27,12 +29,8 @@ CODE
 
 # Declare and install gems
 #
-gem 'bcrypt-ruby', '~> 3.1.2'
-
-inside Rails.root do
-  Bundler.with_clean_env do
-    run 'bundle install'
-  end
+bundle_install do
+  gem 'bcrypt-ruby', '~> 3.1.2'
 end
 #
 # End Declare and install gems
