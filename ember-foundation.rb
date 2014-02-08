@@ -7,9 +7,7 @@ Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
 # Rails 4.0.2
 # foundation-rails 5.1.1.0
 #
-# This template install Zurb Foundation into a Rails project, assuming
-# you've set it up for using Ember. Therefor it removes
-# the (generated) application layout file.
+# This template sets up Zurb Foundation.
 #
 puts <<-CODE
 
@@ -33,8 +31,8 @@ generate 'foundation:install'
 
 # Replace JS initialization with CS
 gsub_file 'app/assets/javascripts/application.js.coffee', /.*foundation\(\).*/, '$ -> $(document).foundation()'
-
-# Remove generated layouts folder, don't need them
-remove_dir 'app/views/layouts'
-
 prepend_file app_js.join('application.js.coffee'), "#= require modernizr\n"
+
+if ask('Do you need an application layout file? You might not it one if you\'re working on a single-page app? [Yn]').downcase == 'n'
+  remove_dir 'app/views/layouts'
+end
