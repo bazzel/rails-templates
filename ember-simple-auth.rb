@@ -38,7 +38,6 @@ end
 script_name      = 'ember-simple-auth'
 script_file_name = "#{script_name}.js"
 tmp_folder       = Pathname.new("/tmp/#{script_name}")
-app_js = Rails.root.join('app', 'assets', 'javascripts')
 
 # Sample user credentials:
 username = 'ember'
@@ -55,7 +54,7 @@ inside(tmp_folder) do
     run 'bundle exec rake dist' # `rake 'dist'` throws an error...
   end
 
-  copy_file tmp_folder.join('dist', script_file_name), Rails.root.join('vendor', 'assets', 'javascripts', script_file_name)
+  copy_file tmp_folder.join('dist', script_file_name), app_js.join(script_file_name)
 end
 
 remove_dir(tmp_folder)
@@ -74,10 +73,6 @@ Ember.Application.initializer
   name: 'authentication',
   initialize: (container, application) ->
     Ember.SimpleAuth.setup(application)
-CODE
-
-prepend_file app_js.join('app.js.coffee'), <<-CODE
-#= require_tree ./initializers
 CODE
 
 # then implement the respective mixin in the application route:
@@ -124,7 +119,7 @@ CODE
 # User model
 #
 generate(:resource, 'user', 'username', 'password_digest', 'token')
-run 'rm app/assets/javascripts/models/user.js.coffee'
+remove_file app_js.join('models/user.js.coffee')
 inject_into_file 'app/models/user.rb', after: "class User < ActiveRecord::Base\n" do
   "  has_secure_password\n"
 end

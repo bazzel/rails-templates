@@ -20,7 +20,6 @@ puts '==  Rails template for setting up Ember.js ===============================
 puts '-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more'
 puts
 
-
 # Declare and install gems
 #
 bundle_install do
@@ -90,27 +89,27 @@ rake 'db:seed'
 # `rails g resource` already provided us with a Ember model
 #
 # Update the router manually:
-inject_into_file 'app/assets/javascripts/router.js.coffee', after: 'App.Router.map ()->' do
+inject_into_file app_js.join('router.js.coffee'), after: 'App.Router.map ()->' do
   "\n  @resource '#{pluralized}'"
 end
 
 # `rails g ember:resource` is not very useful:
-file "app/assets/javascripts/routes/#{pluralized}_route.js.coffee", <<-CODE
+file app_js.join("routes/#{pluralized}_route.js.coffee"), <<-CODE
 App.#{model_names}Route = Ember.Route.extend
   model: ->
     @store.find '#{underscored}'
 CODE
 
 if ask('Do you need an application template? [yN]').downcase == 'y'
-  run 'rm app/assets/javascripts/templates/application.handlebars'
-  file 'app/assets/javascripts/templates/application.handlebars', <<-CODE
+  remove_file app_js.join('templates/application.handlebars')
+  file app_js.join('templates/application.handlebars'), <<-CODE
 {{outlet}}
 CODE
 end
 
 # Generate the template
 #
-file "app/assets/javascripts/templates/#{pluralized}.handlebars", <<-HTML
+file app_js.join("templates/#{pluralized}.handlebars"), <<-HTML
 <ul>
   {{#each}}
   <li>{{title}}</li>

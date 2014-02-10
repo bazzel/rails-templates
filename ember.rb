@@ -8,19 +8,25 @@ Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
 # Ember 1.4.0-beta.5
 # Ember Data 1.0.0-beta.6
 #
-puts
-puts '==  Rails template for setting up Ember.js ================================'
-puts '-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more'
-puts
+puts <<-CODE
 
-unless Rails.root.join('app/assets/javascripts/application.js.coffee').exist?
-  file 'app/assets/javascripts/application.js.coffee', <<-CODE.gsub(/^\s*/, '')
+==  Rails template for setting up Ember.js ================================
+-- see: http://emberjs.com/ and https://github.com/emberjs/ember-rails for more
+
+If you haven\'t set up Ember.js in Rails yet, you can do this by running the following template:
+
+  bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember.rb
+
+CODE
+
+unless app_js.join('application.js.coffee').exist?
+  file app_js.join('application.js.coffee'), <<-CODE.gsub(/^\s*/, '')
     #= require jquery
     #= require jquery_ujs
     #= require_tree .
   CODE
 end
-remove_file 'app/assets/javascripts/application.js'
+remove_file app_js.join('application.js')
 
 # Declare and install gems
 #
@@ -37,6 +43,15 @@ environment 'config.ember.variant = :development'
 environment 'config.ember.variant = :production', env: 'production'
 
 generate 'ember:bootstrap'
+
+prepend_file app_js.join('app.js.coffee'), <<-CODE
+#= require_tree ./initializers
+#= require_tree ./mixins
+CODE
+
+# Create `initializers` folder
+initializers_folder = app_js.join('initializers')
+initializers_folder.directory? || initializers_folder.mkpath
 
 # Updating Ember
 #
@@ -89,7 +104,7 @@ file 'app/views/assets/index.html.erb', <<-CODE
 </html>
 CODE
 
-file 'app/assets/javascripts/templates/application.handlebars', <<-CODE
+file app_js.join('templates/application.handlebars'), <<-CODE
 <div style='width: 600px; border: 6px solid #eee; margin: 0 auto; padding: 20px; text-align: center; font-family: sans-serif;'>
   <img src='http://emberjs.com/images/about/ember-productivity-sm.png' style='display: block; margin: 0 auto;'>
   <h1>Welcome to Ember.js!</h1>

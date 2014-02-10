@@ -25,12 +25,10 @@ end
 #
 # End Declare and install gems
 
-app_js = Rails.root.join('app', 'assets', 'javascripts')
-
 generate 'foundation:install'
 
 # Replace JS initialization with CS
-gsub_file 'app/assets/javascripts/application.js.coffee', /.*foundation\(\).*/, '$ -> $(document).foundation()'
+gsub_file app_js.join('application.js.coffee'), /.*foundation\(\).*/, '$ -> $(document).foundation()'
 prepend_file app_js.join('application.js.coffee'), "#= require modernizr\n"
 
 if ask('Do you need an application layout file? You might not it one if you\'re working on a single-page app? [Yn]').downcase == 'n'
