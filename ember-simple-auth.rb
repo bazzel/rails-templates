@@ -54,7 +54,7 @@ inside(tmp_folder) do
     run 'bundle exec rake dist' # `rake 'dist'` throws an error...
   end
 
-  copy_file tmp_folder.join('dist', script_file_name), app_js.join(script_file_name)
+  copy_file tmp_folder.join('dist', script_file_name), vendor_js.join(script_file_name)
 end
 
 remove_dir(tmp_folder)

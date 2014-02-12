@@ -20,3 +20,8 @@ end
 def app_js
   Rails.root.join('app', 'assets', 'javascripts')
 end
+
+# @return [Pathname] path to `vendor/assets/javascripts`
+def vendor_js
+  Rails.root.join('vendor', 'assets', 'javascripts')
+end
