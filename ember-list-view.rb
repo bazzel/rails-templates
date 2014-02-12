@@ -10,7 +10,8 @@ Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
 # Ember.ListView which has no versioning at the time of writing.
 #
 # This template:
-#  - sets up Ember.ListView as described on the site
+#  * sets up Ember.ListView as described on the site
+#  * downloads a Gist from GitHub containing an Ember Mixins for changing width and height of the ListView during runtime
 #  -
 #  -
 #  -
@@ -54,6 +55,13 @@ inject_into_file app_js.join('application.js.coffee'), after: "#= require ember\
   "#= require #{script_name}\n"
 end
 
+# Download mixin
+url = 'https://gist.github.com/bazzel/8962240/raw/7ec352d2c9454a3ed18fa12ecdf49561e54d41ca/ember-list-view.js.coffee'
+
+app_js.join('mixins', 'ember-list-view.js.coffee').open('w') do |f|
+  f.write Net::HTTP.get(URI(url))
+end
+
 # Add required CSS
 #
 # Not sure where to put this file and require it by application.css[.scss]...
@@ -72,8 +80,18 @@ puts <<-CODE
 *********************************************************************
 Congratulations! Ember.ListView has been added to your Rails project.
 
-Please navigate to the GitHub page for further instructions.
+To change the height and width of Ember.ListView during runtime
+mix the mixin into the subclass of Ember.ListView:
 
+  App.ListView = Ember.ListView.extend ListView.ListViewMixin,
+    width: 100
+    height: 100
+    elementWidth: 112
+    rowHeight: 112
+    itemViewClass: Ember.ListItemView.extend
+      templateName: "row_item"
+
+Please navigate to the GitHub page for further instructions.
 
 More Resources:
   * http://emberjs.com/list-view/
