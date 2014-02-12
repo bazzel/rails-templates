@@ -31,6 +31,6 @@ generate 'foundation:install'
 gsub_file app_js.join('application.js.coffee'), /.*foundation\(\).*/, '$ -> $(document).foundation()'
 prepend_file app_js.join('application.js.coffee'), "#= require modernizr\n"
 
-if ask('Do you need an application layout file? You might not it one if you\'re working on a single-page app? [Yn]').downcase == 'n'
+if ask('Do you need an application layout file? You might not need one if you\'re working on a single-page app? [Yn]').downcase == 'n'
   remove_dir 'app/views/layouts'
 end
