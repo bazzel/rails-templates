@@ -11,7 +11,6 @@ Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
 #
 # This template:
 #  - sets up Ember.ListView as described on the site
-#  - sets up simple authentication as found in RailsCast #250
 #  -
 #  -
 #  -
