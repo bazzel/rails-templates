@@ -16,9 +16,19 @@ def bundle_install
   end
 end
 
+# @return [Pathname] path to `app/assets`
+def app_assets
+  Rails.root.join('app', 'assets')
+end
+
 # @return [Pathname] path to `app/assets/javascripts`
 def app_js
-  Rails.root.join('app', 'assets', 'javascripts')
+  app_assets.join('javascripts')
+end
+
+# @return [Pathname] path to `app/assets/stylesheets`
+def app_css
+  app_assets.join('stylesheets')
 end
 
 # @return [Pathname] path to `vendor/assets/javascripts`
