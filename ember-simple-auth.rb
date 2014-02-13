@@ -97,7 +97,7 @@ inject_into_file app_js.join('router.js.coffee'), after: /^App\.Router\.map.*\n/
 end
 
 # ...and implement the Ember.SimpleAuth mixin in the login controller:
-file app_js.join('routes/login_route.js.coffee'), <<-CODE
+file app_js.join('controllers', 'login_controller.js.coffee'), <<-CODE
 App.LoginController = Ember.Controller.extend Ember.SimpleAuth.LoginControllerMixin
 CODE
 
