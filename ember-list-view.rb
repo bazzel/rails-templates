@@ -56,7 +56,7 @@ inject_into_file app_js.join('application.js.coffee'), after: "#= require ember\
 end
 
 # Download mixin
-url = 'https://gist.github.com/bazzel/8962240/raw/7ec352d2c9454a3ed18fa12ecdf49561e54d41ca/ember-list-view.js.coffee'
+url = 'https://gist.github.com/bazzel/8962240/raw/4cf738cdce5ecbe04c217a2a81aaed5bd1bcc7c7/ember-list-view.js.coffee'
 
 app_js.join('mixins', 'ember-list-view.js.coffee').open('w') do |f|
   f.write Net::HTTP.get(URI(url))
