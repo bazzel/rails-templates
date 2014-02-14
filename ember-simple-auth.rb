@@ -11,8 +11,8 @@ Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
 #
 # This template:
 #  - sets up Ember SimpleAuth as described on the site
-#  - sets up simple authentication as found in RailsCast #250
-#  -
+#  - sets up simple authentication inspired by RailsCast #250 and reviewed by Marco Otte-Witte
+#  - Shows an error message when authentication fails with a X to close the message
 #  -
 #  -
 #
@@ -84,7 +84,7 @@ CODE
 prepend_file app_js.join('templates/application.handlebars'), <<-CODE
 
 {{#if session.isAuthenticated}}
-  <a {{ action 'invalidateSession' }}>Logout</a>
+  <a {{action 'invalidateSession'}}>Logout</a>
 {{else}}
   {{#link-to 'login'}}Login{{/link-to}}
 {{/if}}
@@ -98,17 +98,42 @@ end
 
 # ...and implement the Ember.SimpleAuth mixin in the login controller:
 file app_js.join('controllers', 'login_controller.js.coffee'), <<-CODE
-App.LoginController = Ember.Controller.extend Ember.SimpleAuth.LoginControllerMixin
+App.LoginController = Ember.Controller.extend Ember.SimpleAuth.LoginControllerMixin,
+  actions:
+    sessionAuthenticationFailed: (error) ->
+      msg = JSON.parse(error).error
+      @set('errorMessage', msg)
+    closeMessage: ->
+      @set('errorMessage', null)
+
+  reset: ->
+    @setProperties
+      errorMessage: null
+      identification: null
+      password: null
+CODE
+
+file app_js.join('routes', 'login_route.js.coffee'), <<-CODE
+App.LoginRoute = Ember.Route.extend
+  setupController: (controller, model) ->
+    controller.reset()
 CODE
 
 # Render the login form:
 file app_js.join('templates/login.handlebars'), <<-CODE
+{{#if errorMessage}}
+  <div data-alert class='alert alert-box radius'>
+    {{errorMessage}}
+    <a {{action 'closeMessage'}} class='close'>x</a>
+  </div>
+{{/if}}
+
 <form {{action 'authenticate' on='submit'}}>
-  <label for="identification">Login</label>
+  <label for='identification'>Login</label>
   {{input id='identification' placeholder='Enter Login' value=identification}}
-  <label for="password">Password</label>
+  <label for='password'>Password</label>
   {{input id='password' placeholder='Enter Password' type='password' value=password}}
-  <button type="submit">Login</button>
+  <button type='submit'>Login</button>
 </form>
 CODE
 #
@@ -163,7 +188,7 @@ class SessionsController < ApplicationController
       user.save!
       render json: { access_token: user.token, token_type: 'bearer' }
     else
-      head 401
+      render json: {error: "Email or password is invalid"}, status: :unauthorized
     end
   end
 end
