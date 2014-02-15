@@ -1,6 +1,8 @@
 ## Introduction
 
-This is a collection of Rails templates.
+This is a collection of Rails templates:
+
+|ember|Sets up Ember.JS using the ember-rails gem. It updates your environment files (environment.rb, development.rb, production.rb), adds `require`'s to app.js.coffee, lets you choose which channel to download (release, beta, canary) and creates enough backend code to get started|
 
 ## Requirements
 
