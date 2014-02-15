@@ -1,7 +1,7 @@
 Dir[File.join(File.dirname(__FILE__), 'utils/*.rb')].each {|file| require file }
 
-# rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/ember-foundation.rb
-# bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/ember-foundation.rb
+# rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/foundation.rb
+# bundle exec rake rails:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/foundation.rb
 #
 # Tested with:
 # Rails 4.0.2
