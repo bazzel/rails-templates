@@ -19,8 +19,8 @@ CODE
 # Declare and install gems
 #
 bundle_install do
-  gem 'foundation-rails', '~> 5.1.1.0'
-  gem 'modernizr'
+  gem 'foundation-rails', '~> 5.2'
+  gem 'modernizr-rails'
 end
 #
 # End Declare and install gems
