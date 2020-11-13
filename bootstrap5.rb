@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rails new APP_PATH -m=https://raw.github.com/bazzel/rails-templates/master/bootstrap5.rb
 # bin/rails app:template LOCATION=https://raw.github.com/bazzel/rails-templates/master/bootstrap5.rb
 #
 # Tested with:
@@ -12,16 +11,16 @@
 # But... is still work in progress
 #
 puts <<~CODE
-  
+
   ==  Rails template for setting up Bootstrap 5  ================================
   -- see: https://v5.getbootstrap.com for more info
-  
+
 CODE
 
 rails_command 'webpacker:install:stimulus'
 run 'yarn add bootstrap@next popper.js'
 
-create_file 'app/javascript/packs/styles.scss', <<~EOF
+file 'app/javascript/packs/styles.scss', <<~EOF
   @import "~bootstrap/scss/bootstrap";
 EOF
 
@@ -35,7 +34,7 @@ gsub_file 'config/webpacker.yml', 'extract_css: false', 'extract_css: true'
 gsub_file 'app/views/layouts/application.html.erb', /(<body.+class=['"])([^'"]+)(['"])/, '\1\2 container\3'
 gsub_file 'app/views/layouts/application.html.erb', '<body>', '<body class=\'container\'>'
 
-create_file 'app/javascript/controllers/alert_controller.js', <<~EOF
+file 'app/javascript/controllers/alert_controller.js', <<~EOF
   import { Controller } from "stimulus";
   import { Alert } from "bootstrap/dist/js/bootstrap.esm";
 
